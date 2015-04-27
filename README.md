@@ -3,18 +3,17 @@
 
 ## About ##
 
-Describe your project here.
+Projekt dziennika elektronicznego.
 
 ## Prerequisites ##
 
-- Python 2.6 or 2.7
+- Python 2.7
 - pip
 - virtualenv (virtualenvwrapper is recommended for use during development)
 
 ## Installation ##
 
-Fill out with installation instructions for your project.
-
+pip install -r requirements.txt
 
 License
 -------
