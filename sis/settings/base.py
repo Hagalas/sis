@@ -4,6 +4,7 @@ repo. If you need to override a setting locally, use local.py
 """
 
 import os
+import sys
 import logging
 
 # Normally you should not import ANYTHING from Django directly
@@ -22,6 +23,8 @@ def get_env_setting(setting):
 
 # Your project root
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__) + "../../../")
+sys.path.append(os.path.join(PROJECT_ROOT, 'lib/'))
+sys.path.append(os.path.join(PROJECT_ROOT, 'apps/'))
 
 SUPPORTED_NONLOCALES = ['media', 'admin', 'static']
 
@@ -34,6 +37,7 @@ ROOT_URLCONF = 'sis.urls'
 
 # Application definition
 INSTALLED_APPS = (
+    'suit',
     # Django contrib apps
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,11 +52,14 @@ INSTALLED_APPS = (
     'djcelery',
     'debug_toolbar',
     'compressor',
+    'django_extensions',
 
     # Application base, containing global templates.
     'base',
 
     # Local apps, referenced via appname
+    'users',
+    'core',
 )
 
 # Place bcrypt first in the list, so it will be the default password hashing
@@ -117,7 +124,7 @@ USE_TZ = True
 # although not all choices may be available on all operating systems.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Los_Angeles'
+TIME_ZONE = 'Europe/Warsaw'
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -212,8 +219,8 @@ WSGI_APPLICATION = 'sis.wsgi.application'
 # Define your database connections
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.',
-        'NAME': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db/development.sqlite3',
         'USER': '',
         'PASSWORD': '',
         'HOST': '',
@@ -259,6 +266,8 @@ ALLOWED_HOSTS = []
 # Uncomment to use, and then make sure you set the SECRET_KEY environment variable.
 # This is good to use in production, and on services that support it such as Heroku.
 #SECRET_KEY = get_env_setting('SECRET_KEY')
+SECRET_KEY = '*k3tkxu5a*08f9ann#5sn!3qc&o2nkr-+z)0=kmm7md9!z7=^k'
+
 
 # Uncomment these to activate and customize Celery:
 # CELERY_ALWAYS_EAGER = False  # required to activate celeryd
@@ -302,3 +311,25 @@ LOGGING = {
 #CEF_VENDOR = 'Your Company'
 #CEF_VERSION = '0'
 #CEF_DEVICE_VERSION = '0'
+
+_ = lambda x: x
+
+SUIT_CONFIG = {
+    'ADMIN_NAME': 'Dziennik Elektroniczny',
+    'MENU': (
+        {
+            'label': _('Users'),
+            'icon': 'icon-user',
+            'models': (
+                {'model': 'auth.user', 'label': _('Users')},
+                'auth.group',
+                'users.userprofile'
+            )
+        },
+        {
+            'label': _('DjCelery'),
+            'icon': 'icon-time',
+            'app': 'djcelery',
+        },
+    )
+}

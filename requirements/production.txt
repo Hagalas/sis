@@ -2,7 +2,7 @@
 -r compiled.txt
 
 # Django stuff
-Django>=1.7
+Django==1.7
 
 # Templates
 django_compressor
@@ -28,8 +28,10 @@ python-memcached
 # Admin
 django-debug-toolbar
 
-# Migrations
-South
-
 # Feature testing
 #django-waffle
+
+Pillow
+django-suit
+django-extensions
+django-nose
