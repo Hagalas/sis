@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="section">
+        <h2>Plan zajęć: {{ class_year }}</h2>
+
+        <div class="content">
+            {% for day in days %}
+                <h3>{{ day.name }}</h3>
+
+                <table width="100%">
+                    {% for sub in day.subjects %}
+                        <tr>
+                            <td>{{ sub.starts_at }}</td>
+                            <td>{{ sub.ends_at }}</td>
+                            <td>{{ sub.subject }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

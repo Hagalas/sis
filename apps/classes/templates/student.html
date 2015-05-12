@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="section">
+        <h2>Moja klasa: {{ class_year }}</h2>
+
+        <div class="content">
+            <ul>
+                <li> Wychowawca: <b>{{ class_year.lead_teacher }}</b><br /><br /></li>
+                {% for student in class_year.students.all %}
+                    <li> {{ student }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Moje przedmioty</h2>
+
+        <div class="content">
+            <ul>
+                {% for subject in class_year.subjects.all %}
+                    <li> <a href="{% url 'grades' %}?student={{ student.id }}&id={{ subject.id }}" target="_blank">{{ subject.subject.name }}</a>
+                        <ul>
+                            {% for teacher in subject.teachers.all %}
+                                <li> {{ teacher }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Plan zajęć</h2>
+
+        <ul>
+            {% for schedule in class_year.year.schedules.all %}
+                <li> <a href="{% url 'schedule' %}?id={{ schedule.id }}&student={{ student.id }}&class_year={{ class_year.id }}" target="_blank">{{ schedule }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endblock %}

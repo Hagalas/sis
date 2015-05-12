@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Wybierz klasę</h2>
+
+    <ul>
+        {% for year in class_years %}
+        <li> <a href="?student={{ student.id }}&class_year={{ year.id }}">{{ year }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

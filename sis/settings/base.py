@@ -60,6 +60,7 @@ INSTALLED_APPS = (
     # Local apps, referenced via appname
     'users',
     'core',
+    'classes',
 )
 
 # Place bcrypt first in the list, so it will be the default password hashing
@@ -324,6 +325,27 @@ SUIT_CONFIG = {
                 {'model': 'auth.user', 'label': _('Users')},
                 'auth.group',
                 'users.userprofile'
+            )
+        },
+        {
+            'label': _('Classes'),
+            'icon': 'icon-leaf',
+            'models': (
+                {
+                    'classes.schoolyear',
+                    'classes.subject',
+                    'classes.class',
+                    'classes.classyear',
+                    'classes.classsubject',
+                    'classes.classroom',
+                    'classes.schedule',
+                    'classes.subjectscheduledate',
+                    'classes.lesson',
+                    'classes.lessonabsence',
+                    'classes.grade',
+                    'classes.gradecategory',
+
+                 }
             )
         },
         {

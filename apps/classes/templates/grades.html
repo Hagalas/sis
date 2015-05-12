@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="section">
+        <h2>Oceny (średnia: {{ avg }})</h2>
+        <div class="content">
+            <table width="100%">
+                <thead>
+                <tr>
+                    <th>Ocena (waga)</th>
+                    <th>Kategoria</th>
+                    <th>Data</th>
+                    <th>Nauczyciel</th>
+                    <th>Uwagi</th>
+                </tr>
+                </thead>
+
+                {% for grade in grades %}
+                    <tr>
+                    <td><b>{{ grade.get_grade_display }}</b> ({{ grade.weight }})</td>
+                    <td>{{ grade.category }}</td>
+                    <td>{{ grade.lesson.date }}</td>
+                    <td>{{ grade.teacher }}</td>
+                    <td>{{ grade.notes }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+
+        <h2>Zajęcia</h2>
+
+        <div class="content">
+            <table width="100%">
+                <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Temat zajęć</th>
+                    <th>Uwagi</th>
+                    <th>Obecność</th>
+                </tr>
+                </thead>
+
+                {% for lesson in lessons %}
+                    <tr>
+                    <td>{{ lesson.date }}</td>
+                    <td>{{ lesson.subject }}</td>
+                    <td>{{ lesson.notes }}</td>
+
+                    {% if not student.id in lesson.absent_ids %}
+                        <td style="background: #aaffaa">Obecny</td>
+                    {% else %}
+                        <td style="background: #ffaaaa">Nieobecny</td>
+                    {% endif %}
+
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}
