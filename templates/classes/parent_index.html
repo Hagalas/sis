@@ -1,8 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'classes/base.html' %}
 
 {% block content %}
-    <h2>Wybierz ucznia</h2>
-
+    <h2>Wybierz ucznia / studenta</h2>
     <ul>
     {% for student in students %}
         <li> <a href="?student={{ student.id }}">{{ student }}</a></li>

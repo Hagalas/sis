@@ -67,13 +67,13 @@ class ParentRelation(models.Model):
         verbose_name_plural = _('Parent Relations')
 
 
-@receiver(post_save, sender=User)
-def update_user_profile(sender, **kwargs):
-    user = kwargs['instance']
-    profile, created = UserProfile.objects.get_or_create(user=user)
-    UserProfile.objects.filter(id=profile.id).update(first_name=user.first_name,
-                                                     last_name=user.last_name,
-                                                     email=user.email)
+# @receiver(post_save, sender=User)
+# def update_user_profile(sender, **kwargs):
+#     user = kwargs['instance']
+#     profile, created = UserProfile.objects.get_or_create(user=user)
+#     UserProfile.objects.filter(id=profile.id).update(first_name=user.first_name,
+#                                                      last_name=user.last_name,
+#                                                      email=user.email)
 
 
 @receiver(post_save, sender=UserProfile)

@@ -2,9 +2,10 @@ from django.contrib.auth import authenticate, logout as auth_logout, login as au
 from django.shortcuts import render, redirect
 
 from django.contrib.auth.forms import AuthenticationForm
+from classes.forms import AuthForm
 
-from users.models import *
-from .models import *
+from users.models import UserProfile
+from classes.models import SubjectScheduleDate, ClassSubject, Lesson, Grade, ClassYear
 
 
 def schedule(request):
@@ -19,7 +20,7 @@ def schedule(request):
             'name': name
         })
 
-    return render(request, 'schedule.html', {'days': days})
+    return render(request, 'classes/schedule.html', {'days': days})
 
 
 def grades(request):
@@ -31,7 +32,7 @@ def grades(request):
     s = sum([grade.grade*grade.weight for grade in grades])
     n = sum([grade.weight for grade in grades])
 
-    return render(request, 'grades.html', {
+    return render(request, 'classes/grades.html', {
         'subject': subject,
         'student': student,
         'lessons': lessons,
@@ -45,13 +46,13 @@ def student_view(request, id):
 
     if not 'class_year' in request.GET:
         class_years = ClassYear.objects.filter(students__id=student.id)
-        return render(request, 'student_years.html', {
+        return render(request, 'classes/student_years.html', {
             'student': student,
             'class_years': class_years,
         })
     else:
         class_year = ClassYear.objects.get(id=request.GET.get('class_year'))
-        return render(request, 'student.html', {
+        return render(request, 'classes/student.html', {
             'student': student,
             'class_year': class_year,
         })
@@ -61,7 +62,7 @@ def parent_view(request):
     student_id = request.GET.get('student', None)
     if not student_id:
         students = [rel.child for rel in request.user.profile.children_rel.all()]
-        return render(request, 'parent_index.html', {
+        return render(request, 'classes/parent_index.html', {
             'students': students
         })
     else:
@@ -70,11 +71,11 @@ def parent_view(request):
 
 def index(request):
     if request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)
+        form = AuthForm(data=request.POST)
         if form.is_valid():
             auth_login(request, form.user_cache)
     else:
-        form = AuthenticationForm()
+        form = AuthForm()
 
     user = request.user
     if user is not None and user.is_authenticated():
@@ -83,4 +84,9 @@ def index(request):
         elif user.profile.is_student:
             return student_view(request, request.user.profile.id)
 
-    return render(request, 'login.html', {'form': form})
+    return render(request, 'classes/login.html', {'form': form})
+
+
+def logout(request):
+    auth_logout(request)
+    return index(request)
