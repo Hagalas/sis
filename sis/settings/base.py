@@ -53,6 +53,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'compressor',
     'django_extensions',
+    'easy_thumbnails',
 
     # Application base, containing global templates.
     'base',

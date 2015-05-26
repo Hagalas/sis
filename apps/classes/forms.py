@@ -13,3 +13,7 @@ class AuthForm(AuthenticationForm):
         super(AuthForm, self).__init__(*args, **kwargs)
         self.fields['username'].widget.attrs['class'] = 'form-control'
         self.fields['password'].widget.attrs['class'] = 'form-control'
+
+
+class WzorPodpisuFormularz(forms.Form):
+    wzorpodpisu = forms.ImageField(label="Wybierz plik")

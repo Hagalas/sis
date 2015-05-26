@@ -1,5 +1,6 @@
 {% extends 'classes/base.html' %}
-
+{% load static %}
+{% load thumbnail %}
 {% block content %}
     <h2>Wybierz ucznia / studenta</h2>
     <ul>
@@ -7,4 +8,12 @@
         <li> <a href="?student={{ student.id }}">{{ student }}</a></li>
     {% endfor %}
     </ul>
+
+    <h2>Wyślij wzór podpisu:</h2>
+    <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+        {{ wzorpodpisuform }}
+    <button type="submit">Wyślij</button>
+    </form>
+    <img src="{% thumbnail wzorpodpisu 400x200 crop %}" alt=""/>
 {% endblock %}
